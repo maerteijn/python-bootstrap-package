@@ -1,0 +1,79 @@
+[project]
+name = "python-bootstrap-package"
+version = {use_scm = true}
+description = "An boilerplate / bootstrap installation of a python package"
+authors = [
+    {name = "Martijn Jacobs", email = "maerteijn@gmail.com"},
+]
+dependencies = [
+]
+requires-python = ">=3.8"
+dynamic = ["version", "classifiers"]
+license = {text = "MIT"}
+readme = "README.md"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9"
+]
+
+[project.urls]
+homepage = "https://github.com/maerteijn/python-bootstrap-package"
+repository = "https://github.com/maerteijn/python-bootstrap-package"
+
+[tool.pdm]
+includes = ["src/python_bootstrap_package"]
+package-dir = "src"
+
+[tool.pdm.scripts]
+flake8 = "flake8 ."
+pylint = "pylint src/"
+pytest = "pytest"
+black = "black src/"
+isort = "isort ."
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "flake8~=3.8",
+    "flake8-black<1.0.0,>=0.2.1",
+    "flake8-isort==4.0",
+    "pylint~=2.8",
+    "pytest~=6.2",
+    "pytest-cov~=2.11",
+]
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool.black]
+line-length = 88
+exclude = "/migrations/|/__pypackages__/"
+
+[tool.pylint.messages_control]
+disable = "C,W5103"
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.pylint.master]
+init-hook = "import sys; sys.path.append('.')"
+
+[tool.isort]
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 88
+multi_line_output = 3
+use_parentheses = true
+
+[tool.pytest.ini_options]
+testpaths = "tests/"
+addopts = "--cov=python_bootstrap_package"
+
+[tool.coverage.run]
+omit = ["**/tests/**","__pypackages__/**"]
+
+[tool.coverage.report]
+show_missing = true
